@@ -25,7 +25,7 @@ public class PriceDetails {
     @ManyToOne
     @JoinColumn(name = "course_id", nullable = false)
     private Course course;
-    @OneToOne(mappedBy = "price_details")
+    @OneToOne(mappedBy = "priceDetails")
     private Class aClass;
 
     @Override

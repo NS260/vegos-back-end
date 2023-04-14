@@ -18,19 +18,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CourseDetails {
-    public CourseDetails(String welcomeVideo, AgeGroup ageGroup, String description, Set<Review> reviews, Set<QuestionBlock> questionBlocks, Set<Class> classes, Set<Photo> photos, CourseStructure courseStructure) {
-        this.welcomeVideo = welcomeVideo;
-        this.ageGroup = ageGroup;
-        this.description = description;
-        this.reviews = reviews;
-        this.questionBlocks = questionBlocks;
-        this.classes = classes;
-        this.photos = photos;
-        this.courseStructure = courseStructure;
-    }
-
     @Id
-    @Column(name = "course_details_id")
     private long courseDetailsId;
     @OneToOne
     @MapsId
@@ -41,17 +29,17 @@ public class CourseDetails {
     @Enumerated
     @Column(columnDefinition = "smallint", name = "age_group")
     private AgeGroup ageGroup;
-    @Column(name = "desc")
+    @Column(name = "description")
     private String description;
-    @OneToMany(mappedBy = "course_details")
+    @OneToMany(mappedBy = "courseDetails")
     private Set<Review> reviews;
-    @OneToMany(mappedBy = "course_details")
+    @OneToMany(mappedBy = "courseDetails")
     private Set<QuestionBlock> questionBlocks;
-    @OneToMany(mappedBy = "course_details")
+    @OneToMany(mappedBy = "courseDetails")
     private Set<Class> classes;
-    @OneToMany(mappedBy = "course_details")
+    @OneToMany(mappedBy = "courseDetails")
     private Set<Photo> photos;
-    @OneToOne(mappedBy = "course_details", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "courseDetails", cascade = CascadeType.ALL)
     private CourseStructure courseStructure;
 
     @Override

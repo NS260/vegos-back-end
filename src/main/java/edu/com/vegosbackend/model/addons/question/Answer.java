@@ -1,5 +1,6 @@
 package edu.com.vegosbackend.model.addons.question;
 
+import edu.com.vegosbackend.model.main.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,12 +19,12 @@ public class Answer {
     private long answerId;
     @Column(name = "text")
     private String text;
-    @Column(name = "author_id")
-    private String author;//TODO class as definition of Author entity
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id",referencedColumnName = "user_id")
+    private User user;
     @Column(columnDefinition = "timestamp", name = "answered_date")
     private LocalDateTime answeredDate;
     @OneToOne
-    @MapsId
     @JoinColumn(name = "question_block_id")
     private QuestionBlock questionBlock;
 
@@ -31,7 +32,7 @@ public class Answer {
     public String toString() {
         return "Answer{" +
                 "text='" + text + '\'' +
-                ", author='" + author + '\'' +
+                ", user='" + user + '\'' +
                 ", answeredDate=" + answeredDate +
                 '}';
     }

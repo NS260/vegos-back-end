@@ -18,7 +18,7 @@ public class StructureTheme {
     @ManyToOne
     @JoinColumn(name = "course_structure_id", nullable = false)
     private CourseStructure courseStructure;
-    @OneToMany(mappedBy = "structure_themes")
+    @OneToMany(mappedBy = "structureTheme")
     private Set<StructureSubTheme> structureSubThemes;
     @Column(name = "theme_name")
     private String name;

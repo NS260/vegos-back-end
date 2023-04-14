@@ -15,9 +15,9 @@ public class QuestionBlock {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "question_block_id")
     private long questionBlockId;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "question_block")
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "questionBlock")
     private Answer answer;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "question_block")
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "questionBlock")
     private Question question;
     @ManyToOne
     @JoinColumn(name = "course_details_id", nullable = false)

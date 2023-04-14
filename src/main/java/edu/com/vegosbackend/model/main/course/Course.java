@@ -3,6 +3,7 @@ package edu.com.vegosbackend.model.main.course;
 import edu.com.vegosbackend.model.addons.settings.CourseFeatures;
 import edu.com.vegosbackend.model.addons.price.PriceDetails;
 import edu.com.vegosbackend.model.constants.Category;
+import edu.com.vegosbackend.model.main.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,8 +27,9 @@ public class Course {
     private CourseDetails courseDetails;
     @OneToOne(mappedBy = "course", cascade = CascadeType.ALL)
     private CourseFeatures courseFeatures;
-    @Column(name = "author_id")
-    private String author; //TODO class as definition of Author entity
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    private User user;
     @Enumerated
     @Column(columnDefinition = "smallint", name = "category")
     private Category category;
