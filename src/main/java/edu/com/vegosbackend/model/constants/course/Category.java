@@ -1,4 +1,4 @@
-package edu.com.vegosbackend.model.constants;
+package edu.com.vegosbackend.model.constants.course;
 
 public enum Category {
    Development,
