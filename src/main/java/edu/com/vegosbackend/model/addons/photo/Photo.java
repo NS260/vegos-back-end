@@ -18,13 +18,6 @@ public class Photo {
     @Column(name = "photo_url")
     private String photoUrl;
     @ManyToOne
-    @JoinColumn(name = "course_details_id", nullable = false)
-    private CourseDetails courseDetails;
-
-    @Override
-    public String toString() {
-        return "Photo{" +
-                ", photoUrl='" + photoUrl + '\'' +
-                '}';
-    }
+    @JoinColumn(name = "course_id", nullable = false, columnDefinition = "bigint")
+    private CourseDetails course;
 }

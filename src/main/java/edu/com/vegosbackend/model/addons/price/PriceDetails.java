@@ -1,6 +1,6 @@
 package edu.com.vegosbackend.model.addons.price;
 
-import edu.com.vegosbackend.model.constants.ClassType;
+import edu.com.vegosbackend.model.constants.course.ClassType;
 import edu.com.vegosbackend.model.main.group.Class;
 import edu.com.vegosbackend.model.main.course.Course;
 import jakarta.persistence.*;
@@ -18,21 +18,13 @@ public class PriceDetails {
     @Column(name = "price_id")
     private long priceId;
     @Enumerated
-    @Column(columnDefinition = "smallint", name = "class_type")
+    @Column(columnDefinition = "smallint", name = "class_type", nullable = false)
     private ClassType classType;
     @Column(name = "price")
     private float price;
     @ManyToOne
-    @JoinColumn(name = "course_id", nullable = false)
+    @JoinColumn(name = "course_id", nullable = false, columnDefinition = "bigint")
     private Course course;
     @OneToOne(mappedBy = "priceDetails")
     private Class aClass;
-
-    @Override
-    public String toString() {
-        return "PriceDetails{" +
-                "classType=" + classType +
-                ", price=" + price +
-                '}';
-    }
 }

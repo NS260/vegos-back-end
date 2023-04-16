@@ -18,15 +18,8 @@ public class CourseStructure {
     @Column(name = "course_structure_id")
     private long courseStructureId;
     @OneToOne
-    @JoinColumn(name = "course_details_id")
-    private CourseDetails courseDetails;
+    @JoinColumn(name = "course_id", nullable = false, columnDefinition = "bigint")
+    private CourseDetails course;
     @OneToMany(mappedBy = "courseStructure")
     private Set<StructureTheme> structureThemes;
-
-    @Override
-    public String toString() {
-        return "CourseStructure{" +
-                "structureThemes=" + structureThemes +
-                '}';
-    }
 }

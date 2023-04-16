@@ -1,6 +1,6 @@
 package edu.com.vegosbackend.model.addons.question;
 
-import edu.com.vegosbackend.model.main.user.User;
+import edu.com.vegosbackend.model.main.user.UserDetails;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,21 +19,12 @@ public class Answer {
     private long answerId;
     @Column(name = "text")
     private String text;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id",referencedColumnName = "user_id")
-    private User user;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false, columnDefinition = "bigint")
+    private UserDetails user;
     @Column(columnDefinition = "timestamp", name = "answered_date")
     private LocalDateTime answeredDate;
     @OneToOne
-    @JoinColumn(name = "question_block_id")
+    @JoinColumn(name = "question_block_id", nullable = false, columnDefinition = "bigint")
     private QuestionBlock questionBlock;
-
-    @Override
-    public String toString() {
-        return "Answer{" +
-                "text='" + text + '\'' +
-                ", user='" + user + '\'' +
-                ", answeredDate=" + answeredDate +
-                '}';
-    }
 }

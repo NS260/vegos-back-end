@@ -1,13 +1,11 @@
 package edu.com.vegosbackend.model.main.user;
 
-import edu.com.vegosbackend.model.addons.question.Answer;
-import edu.com.vegosbackend.model.addons.question.Question;
-import edu.com.vegosbackend.model.constants.UserRole;
-import edu.com.vegosbackend.model.main.course.Course;
+import edu.com.vegosbackend.model.constants.user.UserRole;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 
 @Entity(name = "user")
 @Data
@@ -33,14 +31,8 @@ public class User {
     @Column(name = "age")
     private int age;
     @Enumerated
-    @Column(columnDefinition = "smallint", name = "role")
+    @Column(columnDefinition = "smallint", name = "role", nullable = false)
     private UserRole userRole;
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private UserDetails userDetails;
-    @OneToOne(mappedBy = "user")
-    private Course course;
-    @OneToOne(mappedBy = "user")
-    private Answer answer;
-    @OneToOne(mappedBy = "user")
-    private Question question;
 }

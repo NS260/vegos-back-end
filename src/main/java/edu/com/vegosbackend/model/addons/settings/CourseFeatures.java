@@ -13,21 +13,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CourseFeatures {
     @Id
-    @Column(name = "course_feature_id")
     private long courseFeatureId;
     @OneToOne
     @MapsId
-    @JoinColumn(name = "course_UID")
+    @JoinColumn(name = "course_id", nullable = false,columnDefinition = "bigint")
     private Course course;
-
-    public CourseFeatures(boolean hasDemoLesson, boolean hasGroupLesson, boolean hasIndividualLesson, boolean hasDayLesson, boolean hasNightLesson) {
-        this.hasDemoLesson = hasDemoLesson;
-        this.hasGroupLesson = hasGroupLesson;
-        this.hasIndividualLesson = hasIndividualLesson;
-        this.hasDayLesson = hasDayLesson;
-        this.hasNightLesson = hasNightLesson;
-    }
-
     @Column(name = "has_demo_lesson", columnDefinition = "boolean")
     private boolean hasDemoLesson;
     @Column(name = "has_group_lesson", columnDefinition = "boolean")
@@ -44,18 +34,4 @@ public class CourseFeatures {
     private boolean isLocked;
     @Column(name = "is_closed", columnDefinition = "boolean")
     private boolean isClosed;
-
-    @Override
-    public String toString() {
-        return "CourseFeatures{" +
-                "hasDemoLesson=" + hasDemoLesson +
-                ", hasGroupLesson=" + hasGroupLesson +
-                ", hasIndividualLesson=" + hasIndividualLesson +
-                ", hasDayLesson=" + hasDayLesson +
-                ", hasNightLesson=" + hasNightLesson +
-                ", isActive=" + isActive +
-                ", isLocked=" + isLocked +
-                ", isClosed=" + isClosed +
-                '}';
-    }
 }

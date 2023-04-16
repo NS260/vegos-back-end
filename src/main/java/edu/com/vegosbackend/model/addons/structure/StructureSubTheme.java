@@ -14,18 +14,10 @@ public class StructureSubTheme {
     @Column(name = "sub_theme_id")
     private long structureSubLineId;
     @ManyToOne
-    @JoinColumn(name = "theme_id", nullable = false)
+    @JoinColumn(name = "theme_id", nullable = false, columnDefinition = "bigint")
     private StructureTheme structureTheme;
     @Column(name = "subtheme_name")
     private String name;
     @Column(name = "time")
     private float time;
-
-    @Override
-    public String toString() {
-        return "StructureSubTheme{" +
-                "name='" + name + '\'' +
-                ", time=" + time +
-                '}';
-    }
 }

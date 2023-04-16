@@ -4,7 +4,7 @@ import edu.com.vegosbackend.model.addons.photo.Photo;
 import edu.com.vegosbackend.model.addons.question.QuestionBlock;
 import edu.com.vegosbackend.model.addons.review.Review;
 import edu.com.vegosbackend.model.addons.structure.CourseStructure;
-import edu.com.vegosbackend.model.constants.AgeGroup;
+import edu.com.vegosbackend.model.constants.course.AgeGroup;
 import edu.com.vegosbackend.model.main.group.Class;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -22,7 +22,7 @@ public class CourseDetails {
     private long courseDetailsId;
     @OneToOne
     @MapsId
-    @JoinColumn(name = "course_id")
+    @JoinColumn(name = "course_id", columnDefinition = "bigint")
     private Course course;
     @Column(name = "video_url")
     private String welcomeVideo;
@@ -31,28 +31,14 @@ public class CourseDetails {
     private AgeGroup ageGroup;
     @Column(name = "description")
     private String description;
-    @OneToMany(mappedBy = "courseDetails")
+    @OneToMany(mappedBy = "course")
     private Set<Review> reviews;
-    @OneToMany(mappedBy = "courseDetails")
+    @OneToMany(mappedBy = "course")
     private Set<QuestionBlock> questionBlocks;
-    @OneToMany(mappedBy = "courseDetails")
+    @OneToMany(mappedBy = "course")
     private Set<Class> classes;
-    @OneToMany(mappedBy = "courseDetails")
+    @OneToMany(mappedBy = "course")
     private Set<Photo> photos;
-    @OneToOne(mappedBy = "courseDetails", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "course", cascade = CascadeType.ALL)
     private CourseStructure courseStructure;
-
-    @Override
-    public String toString() {
-        return "CourseDetails{" +
-                "welcomeVideo='" + welcomeVideo + '\'' +
-                ", ageGroup=" + ageGroup +
-                ", description='" + description + '\'' +
-                ", reviews='" + reviews + '\'' +
-                ", questions='" + questionBlocks + '\'' +
-                ", classes='" + classes + '\'' +
-                ", photos='" + photos + '\'' +
-                ", structure='" + courseStructure + '\'' +
-                '}';
-    }
 }

@@ -16,19 +16,11 @@ public class Rate {
     @Column(name = "rate_id")
     private long rateId;
     @Enumerated
-    @Column(columnDefinition = "smallint")
+    @Column(columnDefinition = "smallint", nullable = false)
     private ReviewRateColumns reviewRateColumns;
     @Column(name = "rate")
     private double rate;
     @ManyToOne
-    @JoinColumn(name = "review_id")
+    @JoinColumn(name = "review_id", nullable = false, columnDefinition = "bigint")
     private Review review;
-
-    @Override
-    public String toString() {
-        return "Rate{" +
-                ", reviewRateColumns=" + reviewRateColumns +
-                ", rate=" + rate +
-                '}';
-    }
 }

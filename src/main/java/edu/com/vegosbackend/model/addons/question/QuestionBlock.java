@@ -20,14 +20,6 @@ public class QuestionBlock {
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "questionBlock")
     private Question question;
     @ManyToOne
-    @JoinColumn(name = "course_details_id", nullable = false)
-    private CourseDetails courseDetails;
-
-    @Override
-    public String toString() {
-        return "QuestionBlock{" +
-                "answer=" + answer +
-                ", question=" + question +
-                '}';
-    }
+    @JoinColumn(name = "course_id", nullable = false, columnDefinition = "bigint")
+    private CourseDetails course;
 }

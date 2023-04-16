@@ -2,8 +2,8 @@ package edu.com.vegosbackend.model.main.course;
 
 import edu.com.vegosbackend.model.addons.settings.CourseFeatures;
 import edu.com.vegosbackend.model.addons.price.PriceDetails;
-import edu.com.vegosbackend.model.constants.Category;
-import edu.com.vegosbackend.model.main.user.User;
+import edu.com.vegosbackend.model.constants.course.Category;
+import edu.com.vegosbackend.model.main.user.UserDetails;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,11 +27,11 @@ public class Course {
     private CourseDetails courseDetails;
     @OneToOne(mappedBy = "course", cascade = CascadeType.ALL)
     private CourseFeatures courseFeatures;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
-    private User user;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false, columnDefinition = "bigint")
+    private UserDetails user;
     @Enumerated
-    @Column(columnDefinition = "smallint", name = "category")
+    @Column(columnDefinition = "smallint", name = "category", nullable = false)
     private Category category;
     @OneToMany(mappedBy = "course")
     private Set<PriceDetails> priceDetailsSet;

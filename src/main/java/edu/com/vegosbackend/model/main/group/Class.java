@@ -19,8 +19,8 @@ public class Class {
     @Column(name = "class_id")
     private long classId;
     @ManyToOne
-    @JoinColumn(name = "course_details_id", nullable = false)
-    private CourseDetails courseDetails;
+    @JoinColumn(name = "course_id", nullable = false, columnDefinition = "bigint")
+    private CourseDetails course;
     @Column(name = "class_name")
     private String name;
     @Column(columnDefinition = "timestamp", name = "start_date")
@@ -30,18 +30,6 @@ public class Class {
     @Column(name = "size")
     private int size;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "price_id", referencedColumnName = "price_id")
+    @JoinColumn(name = "price_id", referencedColumnName = "price_id", nullable = false, columnDefinition = "bigint")
     private PriceDetails priceDetails;
-
-    @Override
-    public String toString() {
-        return "Class{" +
-                "classId=" + classId +
-                ", name='" + name + '\'' +
-                ", startDate=" + startDate +
-                ", endDate=" + endDate +
-                ", size=" + size +
-                ", priceDetails=" + priceDetails +
-                '}';
-    }
 }

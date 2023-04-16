@@ -16,18 +16,10 @@ public class StructureTheme {
     @Column(name = "theme_id")
     private long structureLineId;
     @ManyToOne
-    @JoinColumn(name = "course_structure_id", nullable = false)
+    @JoinColumn(name = "course_structure_id", nullable = false, columnDefinition = "bigint")
     private CourseStructure courseStructure;
     @OneToMany(mappedBy = "structureTheme")
     private Set<StructureSubTheme> structureSubThemes;
     @Column(name = "theme_name")
     private String name;
-
-    @Override
-    public String toString() {
-        return "StructureTheme{" +
-                "structureSubThemes=" + structureSubThemes +
-                ", name='" + name + '\'' +
-                '}';
-    }
 }
