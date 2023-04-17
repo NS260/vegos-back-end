@@ -1,6 +1,6 @@
 package edu.com.vegosbackend.model.addons.question;
 
-import edu.com.vegosbackend.model.main.user.UserDetails;
+import edu.com.vegosbackend.model.main.user.roles.Mentor;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,7 +21,7 @@ public class Answer {
     private String text;
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false, columnDefinition = "bigint")
-    private UserDetails user;
+    private Mentor mentor;
     @Column(columnDefinition = "timestamp", name = "answered_date")
     private LocalDateTime answeredDate;
     @OneToOne

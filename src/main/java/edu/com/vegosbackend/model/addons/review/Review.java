@@ -1,7 +1,7 @@
 package edu.com.vegosbackend.model.addons.review;
 
 import edu.com.vegosbackend.model.main.course.CourseDetails;
-import edu.com.vegosbackend.model.main.user.UserDetails;
+import edu.com.vegosbackend.model.main.user.roles.Student;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -16,7 +16,7 @@ public class Review {
     private long reviewId;
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false, columnDefinition = "bigint")
-    private UserDetails user;
+    private Student student;
     @Column(name = "text")
     private String text;
     @OneToMany(mappedBy = "review")

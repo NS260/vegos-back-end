@@ -1,6 +1,10 @@
 package edu.com.vegosbackend.model.main.user;
 
 import edu.com.vegosbackend.model.constants.user.UserRole;
+import edu.com.vegosbackend.model.main.user.constants.LanguageName;
+import edu.com.vegosbackend.model.main.user.roles.Admin;
+import edu.com.vegosbackend.model.main.user.roles.Mentor;
+import edu.com.vegosbackend.model.main.user.roles.Student;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,13 +30,21 @@ public class User {
     private String email;
     @Column(name = "phone")
     private String mobilePhone;
-    @Column(name = "basic_language")
-    private String primaryLanguage;
+    @Enumerated
+    @Column(name = "language", columnDefinition = "smallint")
+    private LanguageName language;
     @Column(name = "age")
     private int age;
     @Enumerated
     @Column(columnDefinition = "smallint", name = "role", nullable = false)
     private UserRole userRole;
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    private UserDetails userDetails;
+    private UserDetails user;
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private Admin admin;
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private Mentor mentor;
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private Student student;
+
 }
