@@ -84,7 +84,9 @@ public class ArticleController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteById(@PathVariable Long id) {
         articleService.deleteArticleById(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity
+                .noContent()
+                .build();
     }
 
     @GetMapping("/{id}/parts")
@@ -95,7 +97,9 @@ public class ArticleController {
                         .map(partMapper::convertToDTO)
                         .map(passembler::toModel)
                         .collect(Collectors.toList()),
-                linkTo(methodOn(ArticleController.class).getAllPartsByArticle(id)).withSelfRel());
+                linkTo(methodOn(ArticleController.class)
+                        .getAllPartsByArticle(id))
+                        .withSelfRel());
     }
 
     @GetMapping("/{current}/parts/{id}")
@@ -139,12 +143,16 @@ public class ArticleController {
     @DeleteMapping("/{current}/parts/{id}")
     public ResponseEntity<?> deletePartById(@PathVariable Long current, @PathVariable Long id) {
         articleService.deletePartByPartIdAndArticleId(id, current);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity
+                .noContent()
+                .build();
     }
 
     @DeleteMapping("/clear")
-    public ResponseEntity<?> clear(){
+    public ResponseEntity<?> clear() {
         articleService.clear();
-        return ResponseEntity.noContent().build();
+        return ResponseEntity
+                .noContent()
+                .build();
     }
 }

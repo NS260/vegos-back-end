@@ -1,4 +1,4 @@
-package edu.com.vegosbackend.service;
+package edu.com.vegosbackend.service.exceptions.article;
 
 public class ArticlesCannotBeDeletedException extends RuntimeException {
     public ArticlesCannotBeDeletedException(){

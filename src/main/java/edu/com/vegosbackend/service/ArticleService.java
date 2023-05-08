@@ -4,6 +4,7 @@ import edu.com.vegosbackend.domain.main.article.Article;
 import edu.com.vegosbackend.domain.main.article.Part;
 import edu.com.vegosbackend.repository.article.ArticleRepo;
 import edu.com.vegosbackend.repository.article.PartRepo;
+import edu.com.vegosbackend.service.exceptions.article.ArticlesCannotBeDeletedException;
 import edu.com.vegosbackend.service.exceptions.article.*;
 import edu.com.vegosbackend.service.exceptions.article.part.*;
 import lombok.AllArgsConstructor;
@@ -135,7 +136,8 @@ public class ArticleService {
                 .getParts()
                 .stream()
                 .filter(val -> val.getId() == id)
-                .findFirst().orElseThrow(() -> new PartNotFoundException(id)));
+                .findFirst()
+                .orElseThrow(() -> new PartNotFoundException(id)));
     }
 
     public List<Part> getAllPartsByArticle(Long id) {
