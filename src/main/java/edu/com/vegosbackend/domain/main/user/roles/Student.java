@@ -1,7 +1,8 @@
 package edu.com.vegosbackend.domain.main.user.roles;
 
-import edu.com.vegosbackend.domain.addons.question.Question;
-import edu.com.vegosbackend.domain.addons.review.Review;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import edu.com.vegosbackend.domain.main.course.question.Question;
+import edu.com.vegosbackend.domain.main.course.review.Review;
 import edu.com.vegosbackend.domain.main.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -14,7 +15,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Student implements Role{
+public class Student implements Role {
     @Id
     private Long id;
 
@@ -23,12 +24,22 @@ public class Student implements Role{
     @JoinColumn(name = "user_id", nullable = false, columnDefinition = "bigint", referencedColumnName = "id")
     private User user;
 
-    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
-    private List<Question> question;
-    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
-    private List<Review> review;
+//    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
+//    private List<Question> question;
+//    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
+//    private List<Review> review;
 
     public Student(User user) {
-        this.user=user;
+        this.user = user;
     }
+
+//    @JsonManagedReference
+//    public List<Question> getQuestion() {
+//        return question;
+//    }
+//
+//    @JsonManagedReference
+//    public List<Review> getReview() {
+//        return review;
+//    }
 }

@@ -1,7 +1,7 @@
 package edu.com.vegosbackend.mapper;
 
-public interface CustomMapper<T, V> {
-    T convertToEntity(V value);
+public interface CustomMapper<Entity, DTO> {
+    Entity convertToEntity(DTO value);
 
-    V convertToDTO(T value);
+    DTO convertToDTO(Entity value);
 }

@@ -1,6 +1,6 @@
 package edu.com.vegosbackend.mapper.article;
 
-import edu.com.vegosbackend.controller.model.dto.PartDTO;
+import edu.com.vegosbackend.controller.settings.model.dto.article.PartDTO;
 import edu.com.vegosbackend.domain.main.article.Part;
 import edu.com.vegosbackend.mapper.CustomMapper;
 import lombok.Data;

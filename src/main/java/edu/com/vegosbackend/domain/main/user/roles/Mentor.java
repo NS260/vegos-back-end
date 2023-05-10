@@ -1,6 +1,6 @@
 package edu.com.vegosbackend.domain.main.user.roles;
 
-import edu.com.vegosbackend.domain.addons.question.Answer;
+import edu.com.vegosbackend.domain.main.course.question.Answer;
 import edu.com.vegosbackend.domain.main.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -20,8 +20,8 @@ public class Mentor implements Role{
     @MapsId
     @JoinColumn(name = "user_id", nullable = false, columnDefinition = "bigint",referencedColumnName = "id")
     private User user;
-    @OneToMany(mappedBy = "mentor",cascade = CascadeType.ALL)
-    private List<Answer> answer;
+//    @OneToMany(mappedBy = "mentor",cascade = CascadeType.ALL)
+//    private List<Answer> answer;
 
     public Mentor(User user) {
         this.user = user;

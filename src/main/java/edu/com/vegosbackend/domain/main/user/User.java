@@ -1,7 +1,7 @@
 package edu.com.vegosbackend.domain.main.user;
 
 import edu.com.vegosbackend.domain.constants.user.UserRole;
-import edu.com.vegosbackend.domain.main.user.constants.LanguageName;
+import edu.com.vegosbackend.domain.constants.global.LanguageName;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class User{
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

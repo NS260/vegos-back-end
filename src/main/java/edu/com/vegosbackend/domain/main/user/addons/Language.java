@@ -1,7 +1,7 @@
 package edu.com.vegosbackend.domain.main.user.addons;
 
 import edu.com.vegosbackend.domain.main.user.User;
-import edu.com.vegosbackend.domain.main.user.constants.LanguageName;
+import edu.com.vegosbackend.domain.constants.global.LanguageName;
 import edu.com.vegosbackend.domain.main.user.constants.Priority;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
