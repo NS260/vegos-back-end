@@ -83,12 +83,4 @@ public class ArticleController {
                 .noContent()
                 .build();
     }
-
-    @DeleteMapping("/clear")
-    public ResponseEntity<?> clear() {
-        articleService.clear();
-        return ResponseEntity
-                .noContent()
-                .build();
-    }
 }

@@ -1,19 +1,8 @@
 package edu.com.vegosbackend.controller.settings.error;
 
-import edu.com.vegosbackend.controller.article.ArticleController;
-import edu.com.vegosbackend.controller.article.PartController;
-import edu.com.vegosbackend.controller.course.CourseController;
-import edu.com.vegosbackend.controller.course.PhotoController;
-import edu.com.vegosbackend.controller.course.PriceController;
-import edu.com.vegosbackend.controller.course.StructureController;
 import edu.com.vegosbackend.controller.settings.error.model.ExceptionBody;
-import edu.com.vegosbackend.service.settings.exceptions.article.*;
-import edu.com.vegosbackend.service.settings.exceptions.article.part.*;
-import edu.com.vegosbackend.service.settings.exceptions.course.*;
-import edu.com.vegosbackend.service.settings.exceptions.course.photo.*;
-import edu.com.vegosbackend.service.settings.exceptions.course.price.*;
-import edu.com.vegosbackend.service.settings.exceptions.course.structure.*;
-import edu.com.vegosbackend.service.settings.exceptions.course.structure.subTheme.*;
+import edu.com.vegosbackend.service.settings.exceptions.BasicException;
+import edu.com.vegosbackend.service.settings.exceptions.model.constants.MessageType;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -29,15 +18,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import java.util.HashMap;
 import java.util.Map;
 
-@RestControllerAdvice(assignableTypes =
-        {
-                ArticleController.class,
-                PartController.class,
-                CourseController.class,
-                PhotoController.class,
-                PriceController.class,
-                StructureController.class
-        })
+@RestControllerAdvice
 public class ErrorHandler extends ResponseEntityExceptionHandler {
 
     @Override
@@ -53,63 +34,25 @@ public class ErrorHandler extends ResponseEntityExceptionHandler {
 
     @ResponseBody
     @ExceptionHandler({
-            ArticleNotFoundException.class,
-            PartNotFoundException.class,
-            ArticlesNotFoundException.class,
-            PartsNotFoundException.class,
-            PhotoNotFoundException.class,
-            PhotosNotFoundException.class,
-            CourseNotFoundException.class,
-            CoursesNotFoundException.class,
-            PriceNotFoundException.class,
-            PricesNotFoundException.class,
-            ThemesNotFoundException.class,
-            ThemeNotFoundException.class,
-            SubThemeNotFoundException.class,
-            SubThemesNotFoundException.class
+            BasicException.class
     })
-    public ResponseEntity<?> handleNotFoundException(RuntimeException e) {
-        return ResponseEntity
-                .status(HttpStatus.NOT_FOUND)
-                .body(ExceptionBody.fillBody(e.getMessage(), HttpStatus.NOT_FOUND));
-    }
-
-    @ResponseBody
-    @ExceptionHandler({
-            ArticleCannotBeCreatedException.class,
-            PartCannotBeAddedException.class,
-            PhotoCannotBeAddedException.class,
-            CourseCannotBeCreatedException.class,
-            PriceCannotBeAddedException.class,
-            ThemeCannotBeAddedException.class,
-            SubThemeCannotBeAddedException.class
-    })
-    public ResponseEntity<?> handleNotCreatedException(RuntimeException e) {
-        return ResponseEntity
-                .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(ExceptionBody.fillBody(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR));
-    }
-
-    @ResponseBody
-    @ExceptionHandler({
-            ArticleCannotBeUpdatedException.class,
-            PartCannotBeUpdatedException.class,
-            ArticleCannotBeDeletedException.class,
-            PartCannotBeDeletedException.class,
-            PhotoCannotBeDeletedException.class,
-            PhotoCannotBeUpdatedException.class,
-            CourseCannotBeDeletedException.class,
-            CourseCannotBeUpdatedException.class,
-            PriceCannotBeDeletedException.class,
-            PriceCannotBeUpdatedException.class,
-            ThemeCannotBeDeletedException.class,
-            ThemeCannotBeUpdatedException.class,
-            SubThemeCannotBeDeletedException.class,
-            SubThemeCannotBeUpdatedException.class
-    })
-    public ResponseEntity<?> handleNotModifiedException(RuntimeException e) {
-        return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
-                .body(ExceptionBody.fillBody(e.getMessage(), HttpStatus.BAD_REQUEST));
+    public ResponseEntity<?> handleException(BasicException e) {
+        if (e.getMessageType().equals(MessageType.NOT_FOUND)) {
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body(ExceptionBody.fillBody(e.getMessage(), HttpStatus.NOT_FOUND));
+        }
+        if (e.getMessageType().equals(MessageType.NOT_ADDED) || e.getMessageType().equals(MessageType.NOT_CREATED)) {
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(ExceptionBody.fillBody(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR));
+        }
+        if (e.getMessageType().equals(MessageType.NOT_UPDATED) || e.getMessageType().equals(MessageType.NOT_DELETED)) {
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body(ExceptionBody.fillBody(e.getMessage(), HttpStatus.BAD_REQUEST));
+        }
+        return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED)
+                .body(e.getMessage());
     }
 }
