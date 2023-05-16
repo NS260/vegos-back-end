@@ -1,12 +1,13 @@
 package edu.com.vegosbackend.domain.main.course;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import edu.com.vegosbackend.domain.constants.global.LanguageName;
 import edu.com.vegosbackend.domain.main.course.settings.CourseFeatures;
 import edu.com.vegosbackend.domain.main.course.price.PriceDetails;
 import edu.com.vegosbackend.domain.constants.course.Category;
-import edu.com.vegosbackend.domain.main.user.User;
+import edu.com.vegosbackend.domain.main.user.roles.Mentor;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -31,8 +32,8 @@ public class Course {
     @Embedded
     private CourseFeatures courseFeatures;
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id", nullable = false, columnDefinition = "bigint", referencedColumnName = "id")
-    private User user;
+    @JoinColumn(name = "user_id", nullable = false, columnDefinition = "bigint", referencedColumnName = "user_id")
+    private Mentor user;
     @Enumerated
     @Column(name = "category_id", nullable = false, columnDefinition = "smallint")
     private Category category;
@@ -52,7 +53,7 @@ public class Course {
     @Column(name = "language_id", nullable = false, columnDefinition = "smallint")
     private LanguageName language;
     @JsonBackReference
-    public User getUser() {
+    public Mentor getUser() {
         return user;
     }
     @JsonManagedReference

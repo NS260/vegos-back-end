@@ -2,7 +2,6 @@ package edu.com.vegosbackend.domain.main.course.price;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import edu.com.vegosbackend.domain.constants.course.ClassType;
-import edu.com.vegosbackend.domain.main.course.group.Class;
 import edu.com.vegosbackend.domain.main.course.Course;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -26,9 +25,6 @@ public class PriceDetails {
     @ManyToOne
     @JoinColumn(name = "course_id", nullable = false, columnDefinition = "bigint")
     private Course course;
-//    @OneToOne(mappedBy = "priceDetails")
-//    private Class aClass;
-
     @JsonBackReference
     public Course getCourse() {
         return course;

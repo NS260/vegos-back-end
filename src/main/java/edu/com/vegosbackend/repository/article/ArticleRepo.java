@@ -2,9 +2,9 @@ package edu.com.vegosbackend.repository.article;
 
 import edu.com.vegosbackend.domain.main.article.Article;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
-
-@Repository
-public interface ArticleRepo extends JpaRepository<Article, Long> {
+@RepositoryRestResource
+public interface ArticleRepo extends JpaRepository<Article, Long>, JpaSpecificationExecutor<Article> {
 }

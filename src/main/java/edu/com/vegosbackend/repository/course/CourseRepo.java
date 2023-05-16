@@ -2,8 +2,9 @@ package edu.com.vegosbackend.repository.course;
 
 import edu.com.vegosbackend.domain.main.course.Course;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
-@Repository
-public interface CourseRepo extends JpaRepository<Course, Long>{
+@RepositoryRestResource
+public interface CourseRepo extends JpaRepository<Course, Long>, JpaSpecificationExecutor<Course> {
 }

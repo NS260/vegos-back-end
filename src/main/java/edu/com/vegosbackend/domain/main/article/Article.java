@@ -47,7 +47,7 @@ public class Article {
     @NotEmpty(message = "Article photo url should be specified")
     private String photoUrl;
     @Column(name = "rate")
-    @Min(value = 1, message = "Rate should be more than 0")
+    @Min(value = 1, message = "RateDTO should be more than 0")
     private int rate;
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(referencedColumnName = "id", name = "user_id", nullable = false, columnDefinition = "bigint")

@@ -2,7 +2,6 @@ package edu.com.vegosbackend.service.article;
 
 import edu.com.vegosbackend.domain.main.article.Article;
 import edu.com.vegosbackend.repository.article.ArticleRepo;
-
 import edu.com.vegosbackend.service.settings.modifiers.GlobalClassGetter;
 import edu.com.vegosbackend.service.settings.exceptions.BasicException;
 import edu.com.vegosbackend.service.settings.exceptions.model.ExceptionModel;
@@ -11,6 +10,7 @@ import edu.com.vegosbackend.service.settings.exceptions.model.constants.ValueTyp
 import edu.com.vegosbackend.service.settings.modifiers.setters.Setter;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -23,7 +23,6 @@ import java.util.Optional;
 public class ArticleService {
     private final ArticleRepo articleRepo;
     private final Setter<Article> articleSetter;
-
     private final GlobalClassGetter getter;
 
     public Optional<Article> createArticle(Article article) {
@@ -32,8 +31,7 @@ public class ArticleService {
                         .save(article))
                 .orElseThrow(() -> new BasicException(
                         article.getClass(),
-                        MessageType.NOT_CREATED)
-                ));
+                        MessageType.NOT_CREATED)));
     }
 
     public Optional<Article> getArticleById(Long id) {
@@ -45,8 +43,7 @@ public class ArticleService {
                         .findAll())
                 .orElseThrow(() -> new BasicException(
                         Article.class,
-                        MessageType.NOT_FOUND
-                ));
+                        MessageType.NOT_FOUND));
     }
 
     public Optional<Article> updateArticleById(Article article, Long id) {
@@ -56,8 +53,7 @@ public class ArticleService {
                         Article.class,
                         ValueType.ID,
                         MessageType.NOT_UPDATED,
-                        List.of(new ExceptionModel(article.getClass(), id.toString()))
-                )));
+                        List.of(new ExceptionModel(article.getClass(), id.toString())))));
     }
 
     public void deleteArticleById(Long id) {
@@ -67,9 +63,11 @@ public class ArticleService {
                     Article.class,
                     ValueType.ID,
                     MessageType.NOT_DELETED,
-                    List.of(new ExceptionModel(Article.class, id.toString())
-                    ));
+                    List.of(new ExceptionModel(Article.class, id.toString())));
         }
     }
 
+    public List<Article> searchBySpecification(Specification<Article> specification) {
+        return articleRepo.findAll(specification);
+    }
 }

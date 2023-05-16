@@ -5,6 +5,10 @@ import edu.com.vegosbackend.domain.main.article.Part;
 import edu.com.vegosbackend.domain.main.course.Course;
 import edu.com.vegosbackend.domain.main.course.photo.Photo;
 import edu.com.vegosbackend.domain.main.course.price.PriceDetails;
+import edu.com.vegosbackend.domain.main.course.question.Answer;
+import edu.com.vegosbackend.domain.main.course.question.Question;
+import edu.com.vegosbackend.domain.main.course.review.Rate;
+import edu.com.vegosbackend.domain.main.course.review.Review;
 import edu.com.vegosbackend.domain.main.course.structure.StructureSubTheme;
 import edu.com.vegosbackend.domain.main.course.structure.StructureTheme;
 import edu.com.vegosbackend.repository.article.ArticleRepo;
@@ -17,6 +21,7 @@ import lombok.Data;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Data
 @Component
@@ -120,6 +125,61 @@ public class GlobalClassGetter {
                         ValueType.ID,
                         MessageType.NOT_FOUND,
                         List.of(new ExceptionModel(StructureSubTheme.class, id.toString()))
+                ));
+    }
+
+    public Review getReview(Long current, Long id) {
+        return getCourse(current)
+                .getCourseDetails()
+                .getReviews()
+                .stream()
+                .filter(val -> val.getId() == id)
+                .findFirst()
+                .orElseThrow(() -> new BasicException(
+                        Review.class,
+                        ValueType.ID,
+                        MessageType.NOT_FOUND,
+                        List.of(new ExceptionModel(Review.class, id.toString()))
+                ));
+    }
+
+    public Rate getRate(Long current, Long review, Long id) {
+        return getReview(current, review)
+                .getRates()
+                .stream()
+                .filter(val -> val.getId() == id)
+                .findFirst()
+                .orElseThrow(() -> new BasicException(
+                        Rate.class,
+                        ValueType.ID,
+                        MessageType.NOT_FOUND,
+                        List.of(new ExceptionModel(Rate.class))
+                ));
+    }
+
+    public Question getQuestion(Long current, Long id) {
+        return getCourse(current)
+                .getCourseDetails()
+                .getQuestion()
+                .stream()
+                .filter(val -> val.getId() == id)
+                .findFirst()
+                .orElseThrow(() -> new BasicException(
+                        Question.class,
+                        ValueType.ID,
+                        MessageType.NOT_FOUND,
+                        List.of(new ExceptionModel(Question.class, id.toString()))
+                ));
+    }
+
+    public Answer getAnswer(Long current, Long question, Long id) {
+        return Optional.of(getQuestion(current, question)
+                        .getAnswer())
+                .orElseThrow(() -> new BasicException(
+                        Answer.class,
+                        ValueType.ID,
+                        MessageType.NOT_FOUND,
+                        List.of(new ExceptionModel(Answer.class, id.toString()))
                 ));
     }
 }

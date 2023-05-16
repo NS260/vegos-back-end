@@ -1,12 +1,15 @@
 package edu.com.vegosbackend.controller.article;
 
+import com.turkraft.springfilter.boot.Filter;
 import edu.com.vegosbackend.controller.settings.model.assembler.article.ArticleModelAssembler;
 import edu.com.vegosbackend.controller.settings.model.dto.article.ArticleDTO;
-import edu.com.vegosbackend.mapper.article.ArticleMapper;
+import edu.com.vegosbackend.domain.main.article.Article;
 import edu.com.vegosbackend.service.article.ArticleService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.modelmapper.ModelMapper;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.IanaLinkRelations;
@@ -25,14 +28,14 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 public class ArticleController {
     private final ArticleService articleService;
     private final ArticleModelAssembler assembler;
-    private final ArticleMapper articleMapper;
+    private final ModelMapper articleMapper;
 
     @GetMapping
     public CollectionModel<EntityModel<ArticleDTO>> getAllArticles() {
         return CollectionModel.of(articleService
                         .getAllArticles()
                         .stream()
-                        .map(articleMapper::convertToDTO)
+                        .map(val -> articleMapper.map(val, ArticleDTO.class))
                         .map(assembler::toModel)
                         .collect(Collectors.toList()),
                 linkTo(methodOn(ArticleController.class)
@@ -44,9 +47,9 @@ public class ArticleController {
     public ResponseEntity<EntityModel<ArticleDTO>> getArticleById(@PathVariable Long id) {
         EntityModel<ArticleDTO> article = assembler
                 .toModel(articleMapper
-                        .convertToDTO(articleService
+                        .map(articleService
                                 .getArticleById(id)
-                                .get()));
+                                .get(), ArticleDTO.class));
         return ResponseEntity
                 .created(article.getRequiredLink(IanaLinkRelations.SELF).toUri())
                 .body(article);
@@ -55,10 +58,10 @@ public class ArticleController {
     @PostMapping
     public ResponseEntity<?> createArticle(@Valid @RequestBody ArticleDTO article) {
         EntityModel<ArticleDTO> model = assembler.toModel(articleMapper
-                .convertToDTO(articleService
+                .map(articleService
                         .createArticle(articleMapper
-                                .convertToEntity(article))
-                        .get()));
+                                .map(article, Article.class))
+                        .get(), ArticleDTO.class));
         return ResponseEntity
                 .created(model.getRequiredLink(IanaLinkRelations.SELF).toUri())
                 .body(model);
@@ -67,10 +70,10 @@ public class ArticleController {
     @PutMapping("/{id}")
     public ResponseEntity<?> editArticleById(@PathVariable Long id, @Valid @RequestBody ArticleDTO article) {
         EntityModel<ArticleDTO> entityModel = assembler.toModel(articleMapper
-                .convertToDTO(articleService
+                .map(articleService
                         .updateArticleById(articleMapper
-                                .convertToEntity(article), id)
-                        .get()));
+                                .map(article, Article.class), id)
+                        .get(), ArticleDTO.class));
         return ResponseEntity
                 .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri())
                 .body(entityModel);
@@ -82,5 +85,18 @@ public class ArticleController {
         return ResponseEntity
                 .noContent()
                 .build();
+    }
+
+    @GetMapping("/search")
+    public CollectionModel<EntityModel<ArticleDTO>> search(@Filter Specification<ArticleDTO> specification) {
+        return CollectionModel.of(articleService
+                        .searchBySpecification((Specification<Article>) articleMapper.map(specification, Specification.class))
+                        .stream()
+                        .map(val -> articleMapper.map(val, ArticleDTO.class))
+                        .map(assembler::toModel)
+                        .collect(Collectors.toList()),
+                linkTo(methodOn(ArticleController.class)
+                        .search(specification))
+                        .withSelfRel());
     }
 }

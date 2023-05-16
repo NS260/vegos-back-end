@@ -1,11 +1,11 @@
 package edu.com.vegosbackend.domain.main.course;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import edu.com.vegosbackend.domain.main.course.photo.Photo;
-import edu.com.vegosbackend.domain.main.course.question.QuestionBlock;
+import edu.com.vegosbackend.domain.main.course.question.Question;
 import edu.com.vegosbackend.domain.main.course.review.Review;
 import edu.com.vegosbackend.domain.main.course.structure.CourseStructure;
 import edu.com.vegosbackend.domain.constants.course.AgeGroup;
-import edu.com.vegosbackend.domain.main.course.group.Class;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,13 +25,16 @@ public class CourseDetails {
     private AgeGroup ageGroup;
     @Column(name = "description")
     private String description;
-//    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<Review> reviews;
-//    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<QuestionBlock> questionBlocks;
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Review> reviews;
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Question> question;
 //    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
 //    private List<Class> classes;
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Photo> photos;
     @Embedded
     private CourseStructure courseStructure;
@@ -39,15 +42,5 @@ public class CourseDetails {
 //    @JsonManagedReference
 //    public List<Class> getClasses() {
 //        return classes;
-//    }
-
-//    @JsonManagedReference
-//    public List<Review> getReviews() {
-//        return reviews;
-//    }
-//
-//    @JsonManagedReference
-//    public List<QuestionBlock> getQuestionBlocks() {
-//        return questionBlocks;
 //    }
 }

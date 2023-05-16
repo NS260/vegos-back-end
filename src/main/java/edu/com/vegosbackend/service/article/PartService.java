@@ -2,7 +2,6 @@ package edu.com.vegosbackend.service.article;
 
 import edu.com.vegosbackend.domain.main.article.Article;
 import edu.com.vegosbackend.domain.main.article.Part;
-import edu.com.vegosbackend.repository.article.ArticleRepo;
 import edu.com.vegosbackend.repository.article.PartRepo;
 import edu.com.vegosbackend.service.settings.modifiers.GlobalClassGetter;
 import edu.com.vegosbackend.service.settings.exceptions.BasicException;
@@ -20,7 +19,6 @@ import java.util.Optional;
 @Data
 public class PartService {
     private final PartRepo partRepo;
-    private final ArticleRepo articleRepo;
     private final Setter<Part> partSetter;
     private final GlobalClassGetter getter;
 
@@ -29,28 +27,22 @@ public class PartService {
         return Optional.ofNullable(Optional.of(partRepo
                         .save(part))
                 .orElseThrow(() -> new BasicException(
-                                part.getClass(),
-                                ValueType.ID,
-                                MessageType.NOT_ADDED,
-                                List.of(new ExceptionModel(part.getArticle().getClass(), id.toString()))
-                        )
-                )
-        );
+                        part.getClass(),
+                        ValueType.ID,
+                        MessageType.NOT_ADDED,
+                        List.of(new ExceptionModel(part.getArticle().getClass(), id.toString())))));
     }
 
     public Optional<Part> editPartByPartIdAndArticleId(Part part, Long id, Long current) {
         return Optional.ofNullable(Optional.of(partRepo
-                        .save(partSetter
-                                .setValue(getter.getPart(current, id), part)))
+                        .save(partSetter.setValue(getter.getPart(current, id), part)))
                 .orElseThrow(() -> new BasicException(
                         part.getClass(),
                         ValueType.ID,
                         MessageType.NOT_UPDATED,
                         List.of(
                                 new ExceptionModel(part.getClass(), id.toString()),
-                                new ExceptionModel(part.getArticle().getClass(), current.toString())
-                        )
-                )));
+                                new ExceptionModel(part.getArticle().getClass(), current.toString())))));
     }
 
     public void deletePartByPartIdAndArticleId(Long id, Long current) {
@@ -70,26 +62,19 @@ public class PartService {
     }
 
     public Optional<Part> getPartByPartIdAndArticleId(Long current, Long id) {
-        return Optional.of(getter.getArticle(current)
-                .getParts()
-                .stream()
-                .filter(val -> val.getId() == id)
-                .findFirst()
+        return Optional.ofNullable(Optional.of(getter.getPart(current, id))
                 .orElseThrow(() -> new BasicException(
                         Part.class,
                         ValueType.ID,
                         MessageType.NOT_FOUND,
                         List.of(
                                 new ExceptionModel(Part.class, id.toString()),
-                                new ExceptionModel(Article.class, current.toString())
-                        )
-                )));
+                                new ExceptionModel(Article.class, current.toString())))));
     }
 
     public List<Part> getAllPartsByArticle(Long id) {
         return partRepo
-                .findAllByArticle(articleRepo
-                        .findById(id)
+                .findAllByArticle(Optional.of(getter.getArticle(id))
                         .orElseThrow(() -> new BasicException(
                                 Part.class,
                                 ValueType.ID,

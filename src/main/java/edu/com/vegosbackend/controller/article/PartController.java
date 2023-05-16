@@ -2,10 +2,11 @@ package edu.com.vegosbackend.controller.article;
 
 import edu.com.vegosbackend.controller.settings.model.assembler.article.PartModelAssembler;
 import edu.com.vegosbackend.controller.settings.model.dto.article.PartDTO;
-import edu.com.vegosbackend.mapper.article.PartMapper;
+import edu.com.vegosbackend.domain.main.article.Part;
 import edu.com.vegosbackend.service.article.PartService;
 import jakarta.validation.Valid;
 import lombok.Data;
+import org.modelmapper.ModelMapper;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.IanaLinkRelations;
@@ -22,7 +23,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @Data
 public class PartController {
     private final PartModelAssembler passembler;
-    private final PartMapper partMapper;
+    private final ModelMapper partMapper;
     private final PartService partService;
 
     @GetMapping
@@ -30,7 +31,7 @@ public class PartController {
         return CollectionModel.of(
                 partService.getAllPartsByArticle(current)
                         .stream()
-                        .map(partMapper::convertToDTO)
+                        .map(val -> partMapper.map(val, PartDTO.class))
                         .map(passembler::toModel)
                         .collect(Collectors.toList()),
                 linkTo(methodOn(PartController.class)
@@ -42,9 +43,9 @@ public class PartController {
     public ResponseEntity<EntityModel<PartDTO>> getPartById(@PathVariable Long current, @PathVariable Long id) {
         EntityModel<PartDTO> part = passembler
                 .toModel(partMapper
-                        .convertToDTO(partService
+                        .map(partService
                                 .getPartByPartIdAndArticleId(current, id)
-                                .get()));
+                                .get(), PartDTO.class));
         return ResponseEntity
                 .created(part.getRequiredLink(IanaLinkRelations.SELF).toUri())
                 .body(part);
@@ -54,10 +55,10 @@ public class PartController {
     public ResponseEntity<?> addPartById(@PathVariable Long current, @Valid @RequestBody PartDTO part) {
         EntityModel<PartDTO> entityModel = passembler
                 .toModel(partMapper
-                        .convertToDTO(partService
+                        .map(partService
                                 .addPartToArticleById(partMapper
-                                        .convertToEntity(part), current)
-                                .get()));
+                                        .map(part, Part.class), current)
+                                .get(), PartDTO.class));
         return ResponseEntity
                 .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri())
                 .body(entityModel);
@@ -67,10 +68,10 @@ public class PartController {
     public ResponseEntity<?> editPartById(@PathVariable Long current, @PathVariable Long id, @Valid @RequestBody PartDTO part) {
         EntityModel<PartDTO> entityModel = passembler
                 .toModel(partMapper
-                        .convertToDTO(partService
+                        .map(partService
                                 .editPartByPartIdAndArticleId(partMapper
-                                        .convertToEntity(part), id, current)
-                                .get()));
+                                        .map(part, Part.class), id, current)
+                                .get(), PartDTO.class));
         return ResponseEntity
                 .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri())
                 .body(entityModel);

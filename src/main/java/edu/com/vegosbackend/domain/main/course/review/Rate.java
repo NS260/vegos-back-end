@@ -1,32 +1,24 @@
 package edu.com.vegosbackend.domain.main.course.review;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import edu.com.vegosbackend.domain.constants.course.ReviewRateColumns;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
-//@Entity(name = "rate")
-//@Data
-//@AllArgsConstructor
-//@NoArgsConstructor
+@Entity(name = "rates")
+@Data
 public class Rate {
-   // @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name = "rate_id")
-//    private long rateId;
-//    @Enumerated
-//    @Column(columnDefinition = "smallint", nullable = false)
-//    private ReviewRateColumns reviewRateColumns;
-//    @Column(name = "rate")
-//    private double rate;
-//    @ManyToOne
-//    @JoinColumn(name = "review_id", nullable = false, columnDefinition = "bigint")
-//    private Review review;
-//
-//    @JsonBackReference
-//    public Review getReview() {
-//        return review;
-//    }
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private long id;
+    @Enumerated
+    @Column(name = "type", columnDefinition = "smallint", unique = true)
+    private RateType type;
+    @Column(name = "value")
+    private double value;
+    @ManyToOne
+    @JoinColumn(name = "review_id", columnDefinition = "bigint", referencedColumnName = "id")
+    @JsonIgnore
+    private Review review;
 }

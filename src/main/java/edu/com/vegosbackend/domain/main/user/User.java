@@ -1,6 +1,6 @@
 package edu.com.vegosbackend.domain.main.user;
 
-import edu.com.vegosbackend.domain.constants.user.UserRole;
+import edu.com.vegosbackend.domain.main.user.constants.UserRole;
 import edu.com.vegosbackend.domain.constants.global.LanguageName;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
