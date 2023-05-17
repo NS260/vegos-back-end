@@ -36,8 +36,7 @@ public class GlobalClassGetter {
                         Course.class,
                         ValueType.ID,
                         MessageType.NOT_FOUND,
-                        List.of(new ExceptionModel(Course.class, id.toString()))
-                ));
+                        List.of(new ExceptionModel(Course.class, id.toString()))));
     }
 
     public Article getArticle(Long id) {
@@ -47,8 +46,7 @@ public class GlobalClassGetter {
                         Article.class,
                         ValueType.ID,
                         MessageType.NOT_FOUND,
-                        List.of(new ExceptionModel(Article.class, id.toString()))
-                ));
+                        List.of(new ExceptionModel(Article.class, id.toString()))));
     }
 
     public StructureTheme getTheme(Long current, Long id) {
@@ -63,8 +61,7 @@ public class GlobalClassGetter {
                         StructureTheme.class,
                         ValueType.ID,
                         MessageType.NOT_FOUND,
-                        List.of(new ExceptionModel(StructureTheme.class, id.toString()))
-                ));
+                        List.of(new ExceptionModel(StructureTheme.class, id.toString()))));
     }
 
     public Part getPart(Long current, Long id) {
@@ -74,12 +71,10 @@ public class GlobalClassGetter {
                 .filter(val -> val.getId() == id)
                 .findFirst()
                 .orElseThrow(() -> new BasicException(
-                                Part.class,
-                                ValueType.ID,
-                                MessageType.NOT_FOUND,
-                                List.of(new ExceptionModel(Part.class, id.toString()))
-                        )
-                );
+                        Part.class,
+                        ValueType.ID,
+                        MessageType.NOT_FOUND,
+                        List.of(new ExceptionModel(Part.class, id.toString()))));
     }
 
     public Photo getPhoto(Long current, Long id) {
@@ -93,8 +88,7 @@ public class GlobalClassGetter {
                         Photo.class,
                         ValueType.ID,
                         MessageType.NOT_FOUND,
-                        List.of(new ExceptionModel(Photo.class, id.toString()))
-                ));
+                        List.of(new ExceptionModel(Photo.class, id.toString()))));
     }
 
     public PriceDetails getPrice(Long current, Long id) {
@@ -109,9 +103,7 @@ public class GlobalClassGetter {
                         MessageType.NOT_FOUND,
                         List.of(
                                 new ExceptionModel(PriceDetails.class, id.toString()),
-                                new ExceptionModel(Course.class, current.toString())
-                        )
-                ));
+                                new ExceptionModel(Course.class, current.toString()))));
     }
 
     public StructureSubTheme getSubTheme(Long current, Long theme, Long id) {
@@ -124,8 +116,7 @@ public class GlobalClassGetter {
                         StructureSubTheme.class,
                         ValueType.ID,
                         MessageType.NOT_FOUND,
-                        List.of(new ExceptionModel(StructureSubTheme.class, id.toString()))
-                ));
+                        List.of(new ExceptionModel(StructureSubTheme.class, id.toString()))));
     }
 
     public Review getReview(Long current, Long id) {
@@ -139,8 +130,7 @@ public class GlobalClassGetter {
                         Review.class,
                         ValueType.ID,
                         MessageType.NOT_FOUND,
-                        List.of(new ExceptionModel(Review.class, id.toString()))
-                ));
+                        List.of(new ExceptionModel(Review.class, id.toString()))));
     }
 
     public Rate getRate(Long current, Long review, Long id) {
@@ -153,8 +143,7 @@ public class GlobalClassGetter {
                         Rate.class,
                         ValueType.ID,
                         MessageType.NOT_FOUND,
-                        List.of(new ExceptionModel(Rate.class))
-                ));
+                        List.of(new ExceptionModel(Rate.class, id.toString()))));
     }
 
     public Question getQuestion(Long current, Long id) {
@@ -168,8 +157,7 @@ public class GlobalClassGetter {
                         Question.class,
                         ValueType.ID,
                         MessageType.NOT_FOUND,
-                        List.of(new ExceptionModel(Question.class, id.toString()))
-                ));
+                        List.of(new ExceptionModel(Question.class, id.toString()))));
     }
 
     public Answer getAnswer(Long current, Long question, Long id) {
@@ -179,7 +167,6 @@ public class GlobalClassGetter {
                         Answer.class,
                         ValueType.ID,
                         MessageType.NOT_FOUND,
-                        List.of(new ExceptionModel(Answer.class, id.toString()))
-                ));
+                        List.of(new ExceptionModel(Answer.class, id.toString()))));
     }
 }

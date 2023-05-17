@@ -7,6 +7,8 @@ import edu.com.vegosbackend.domain.main.course.review.Review;
 import edu.com.vegosbackend.domain.main.course.structure.CourseStructure;
 import edu.com.vegosbackend.domain.constants.course.AgeGroup;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,8 +24,10 @@ public class CourseDetails {
     private String welcomeVideo;
     @Enumerated
     @Column(columnDefinition = "smallint", name = "age_group")
+    @NotNull(message = "Age Type cannot be null")
     private AgeGroup ageGroup;
     @Column(name = "description")
+    @NotEmpty(message = "Description cannot be empty")
     private String description;
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore

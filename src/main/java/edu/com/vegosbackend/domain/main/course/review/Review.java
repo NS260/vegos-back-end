@@ -1,15 +1,14 @@
 package edu.com.vegosbackend.domain.main.course.review;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import edu.com.vegosbackend.domain.main.course.Course;
 import edu.com.vegosbackend.domain.main.user.roles.Student;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.util.List;
-
 
 @Entity(name = "review")
 @Data
@@ -21,13 +20,16 @@ public class Review {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false, columnDefinition = "bigint")
     @JsonIgnore
+    @NotNull(message = "Student cannot be null")
     private Student student;
     @Column(name = "text")
+    @NotBlank(message = "Review text should be specified")
     private String text;
     @OneToMany(mappedBy = "review", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<Rate> rates;
     @ManyToOne
     @JoinColumn(name = "course_id", nullable = false, columnDefinition = "bigint")
     @JsonIgnore
+    @NotNull(message = "Course cannot be null")
     private Course course;
 }
