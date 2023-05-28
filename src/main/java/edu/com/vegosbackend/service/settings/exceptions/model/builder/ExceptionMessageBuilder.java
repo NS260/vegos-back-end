@@ -12,10 +12,10 @@ public class ExceptionMessageBuilder {
     public static String buildMessage(Class<?> aClass, ValueType valueType, MessageType message, List<ExceptionModel> list) {
         StringJoiner joiner = new StringJoiner(", ");
         list.forEach(val -> joiner.add(val.getObject().getSimpleName() + valueType.getValue() + val.getValue()));
-        return aClass.getSimpleName() + message.getMessage() + joiner;
+        return buildMessage(aClass, message) + joiner;
     }
 
     public static String buildMessage(Class<?> aClass, MessageType message) {
-        return aClass.getSimpleName() + message;
+        return aClass.getSimpleName() + message.getMessage();
     }
 }

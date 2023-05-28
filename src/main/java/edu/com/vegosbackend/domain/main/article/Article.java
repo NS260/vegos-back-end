@@ -5,7 +5,6 @@ import edu.com.vegosbackend.domain.constants.article.ArticleType;
 import edu.com.vegosbackend.domain.constants.course.Category;
 import edu.com.vegosbackend.domain.main.user.User;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -47,8 +46,8 @@ public class Article {
     @NotEmpty(message = "Article photo url should be specified")
     private String photoUrl;
     @Column(name = "rate")
-    @Min(value = 1, message = "RateDTO should be more than 0")
-    private int rate;
+    @NotNull(message = "Rate should be specified")
+    private Integer rate;
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(referencedColumnName = "id", name = "user_id", nullable = false, columnDefinition = "bigint")
     @NotNull(message = "User should be specified")

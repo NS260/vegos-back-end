@@ -66,7 +66,7 @@ public class ArticleController {
                 .created(model.getRequiredLink(IanaLinkRelations.SELF).toUri())
                 .body(model);
     }
-
+    @CrossOrigin
     @PutMapping("/{id}")
     public ResponseEntity<?> editArticleById(@PathVariable Long id, @Valid @RequestBody ArticleDTO article) {
         EntityModel<ArticleDTO> entityModel = assembler.toModel(articleMapper
@@ -78,7 +78,7 @@ public class ArticleController {
                 .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri())
                 .body(entityModel);
     }
-
+    @CrossOrigin
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteById(@PathVariable Long id) {
         articleService.deleteArticleById(id);

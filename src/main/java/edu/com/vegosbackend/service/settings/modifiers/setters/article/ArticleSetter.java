@@ -11,8 +11,10 @@ public class ArticleSetter implements Setter<Article> {
         after.setId(before.getId());
         after.setPublishedDate(before.getPublishedDate());
         after.setUser(before.getUser());
-        after.setCategory(before.getCategory());
         after.setArticleType(before.getArticleType());
+        if (after.getCategory() == null) {
+            after.setCategory(before.getCategory());
+        }
         if (after.getParts() == null) {
             after.setParts(before.getParts());
         }
@@ -22,12 +24,13 @@ public class ArticleSetter implements Setter<Article> {
         if (after.getPhotoUrl() == null) {
             after.setPhotoUrl(before.getPhotoUrl());
         }
-        if (after.getRate() == 0) {
+        if (after.getRate() == null) {
             after.setRate(before.getRate());
         }
         if (after.getUserComment() == null) {
             after.setUserComment(before.getUserComment());
         }
+        after.getParts().forEach(val -> val.setArticle(after));
         return after;
     }
 }

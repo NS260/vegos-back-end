@@ -63,7 +63,7 @@ public class PartController {
                 .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri())
                 .body(entityModel);
     }
-
+    @CrossOrigin
     @PutMapping("/{id}")
     public ResponseEntity<?> editPartById(@PathVariable Long current, @PathVariable Long id, @Valid @RequestBody PartDTO part) {
         EntityModel<PartDTO> entityModel = passembler
@@ -77,6 +77,7 @@ public class PartController {
                 .body(entityModel);
     }
 
+    @CrossOrigin
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deletePartById(@PathVariable Long current, @PathVariable Long id) {
         partService.deletePartByPartIdAndArticleId(id, current);
