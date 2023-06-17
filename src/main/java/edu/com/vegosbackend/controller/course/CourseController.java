@@ -29,7 +29,6 @@ public class CourseController {
     private final CourseService courseService;
     private final CourseModelAssembler courseModelAssembler;
     private final ModelMapper courseMapper;
-
     @GetMapping
     public CollectionModel<EntityModel<CourseDTO>> getAllCourses() {
         return CollectionModel.of(courseService
@@ -42,7 +41,6 @@ public class CourseController {
                         .getAllCourses())
                         .withSelfRel());
     }
-
     @GetMapping("/{id}")
     public ResponseEntity<EntityModel<CourseDTO>> getCourseById(@PathVariable Long id) {
         EntityModel<CourseDTO> course = courseModelAssembler
@@ -54,8 +52,8 @@ public class CourseController {
                 .created(course.getRequiredLink(IanaLinkRelations.SELF).toUri())
                 .body(course);
     }
-
     @PostMapping
+    @CrossOrigin
     public ResponseEntity<?> createCourse(@Valid @RequestBody CourseDTO courseDTO) {
         EntityModel<CourseDTO> course = courseModelAssembler.toModel(courseMapper
                 .map(courseService
@@ -66,9 +64,9 @@ public class CourseController {
                 .created(course.getRequiredLink(IanaLinkRelations.SELF).toUri())
                 .body(course);
     }
-
     @PutMapping("/{id}")
-    public ResponseEntity<?> editCourseById(@PathVariable Long id, @Valid @RequestBody CourseDTO courseDTO) {
+    @CrossOrigin
+    public ResponseEntity<EntityModel<CourseDTO>> editCourseById(@PathVariable Long id, @Valid @RequestBody CourseDTO courseDTO) {
         EntityModel<CourseDTO> entityModel = courseModelAssembler.toModel(courseMapper
                 .map(courseService
                         .updateCourseById(courseMapper
@@ -78,15 +76,14 @@ public class CourseController {
                 .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri())
                 .body(entityModel);
     }
-
     @DeleteMapping("/{id}")
+    @CrossOrigin
     public ResponseEntity<?> deleteCourseById(@PathVariable Long id) {
         courseService.deleteCourseById(id);
         return ResponseEntity
                 .noContent()
                 .build();
     }
-
     @GetMapping("/search")
     public CollectionModel<EntityModel<CourseDTO>> search(@Filter Specification<CourseDTO> specification) {
         return CollectionModel.of(courseService

@@ -1,11 +1,12 @@
 package edu.com.vegosbackend.domain.main.course;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import edu.com.vegosbackend.domain.main.course.structure.CourseStructure;
 import edu.com.vegosbackend.domain.main.course.photo.Photo;
 import edu.com.vegosbackend.domain.main.course.question.Question;
 import edu.com.vegosbackend.domain.main.course.review.Review;
-import edu.com.vegosbackend.domain.main.course.structure.CourseStructure;
 import edu.com.vegosbackend.domain.constants.course.AgeGroup;
+import edu.com.vegosbackend.domain.main.course.group.Class;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -29,15 +30,15 @@ public class CourseDetails {
     @Column(name = "description")
     @NotEmpty(message = "Description cannot be empty")
     private String description;
-    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JsonIgnore
     private List<Review> reviews;
-    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JsonIgnore
     private List<Question> question;
-//    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<Class> classes;
-    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    private List<Class> classes;
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JsonIgnore
     private List<Photo> photos;
     @Embedded

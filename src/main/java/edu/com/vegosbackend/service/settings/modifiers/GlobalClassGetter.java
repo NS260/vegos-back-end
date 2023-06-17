@@ -1,5 +1,6 @@
 package edu.com.vegosbackend.service.settings.modifiers;
 
+import edu.com.vegosbackend.domain.main.course.group.Class;
 import edu.com.vegosbackend.domain.main.article.Article;
 import edu.com.vegosbackend.domain.main.article.Part;
 import edu.com.vegosbackend.domain.main.course.Course;
@@ -47,6 +48,20 @@ public class GlobalClassGetter {
                         ValueType.ID,
                         MessageType.NOT_FOUND,
                         List.of(new ExceptionModel(Article.class, id.toString()))));
+    }
+
+    public Class getClass(Long current, Long id) {
+        return getCourse(current)
+                .getCourseDetails()
+                .getClasses()
+                .stream()
+                .filter(val -> val.getId() == id)
+                .findFirst()
+                .orElseThrow(() -> new BasicException(
+                        Class.class,
+                        ValueType.ID,
+                        MessageType.NOT_FOUND,
+                        List.of(new ExceptionModel(Class.class, id.toString()))));
     }
 
     public StructureTheme getTheme(Long current, Long id) {

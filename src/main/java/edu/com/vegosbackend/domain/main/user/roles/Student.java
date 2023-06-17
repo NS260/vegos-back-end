@@ -1,7 +1,7 @@
 package edu.com.vegosbackend.domain.main.user.roles;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import edu.com.vegosbackend.domain.main.course.group.Class;
 import edu.com.vegosbackend.domain.main.course.question.Question;
 import edu.com.vegosbackend.domain.main.course.review.Review;
 import edu.com.vegosbackend.domain.main.user.User;
@@ -22,7 +22,6 @@ public class Student implements Role {
 
     @OneToOne
     @MapsId
-    @JoinColumn(name = "user_id", nullable = false, columnDefinition = "bigint", referencedColumnName = "id")
     private User user;
 
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
@@ -31,6 +30,15 @@ public class Student implements Role {
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Review> review;
+
+    @ManyToMany
+    @JoinTable(
+            name = "student_classes",
+            joinColumns = @JoinColumn(name = "student_id"),
+            inverseJoinColumns = @JoinColumn(name = "class_id")
+    )
+    @JsonIgnore
+    private List<Class> classes;
 
     public Student(User user) {
         this.user = user;

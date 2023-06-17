@@ -8,7 +8,9 @@ import org.springframework.stereotype.Component;
 public class CourseSetter implements Setter<Course> {
     @Override
     public Course setValue(Course before, Course after) {
+        after.setId(before.getId());
         after.setCreateDate(before.getCreateDate());
+        after.setMentor(before.getMentor());
         return after;
     }
 }

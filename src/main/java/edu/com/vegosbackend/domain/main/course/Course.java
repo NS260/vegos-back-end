@@ -2,11 +2,11 @@ package edu.com.vegosbackend.domain.main.course;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import edu.com.vegosbackend.domain.constants.global.LanguageName;
 import edu.com.vegosbackend.domain.main.course.settings.CourseFeatures;
-import edu.com.vegosbackend.domain.main.course.price.PriceDetails;
-import edu.com.vegosbackend.domain.constants.course.Category;
 import edu.com.vegosbackend.domain.main.user.roles.Mentor;
+import edu.com.vegosbackend.domain.main.course.price.PriceDetails;
+import edu.com.vegosbackend.domain.constants.global.LanguageName;
+import edu.com.vegosbackend.domain.constants.course.Category;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -26,7 +26,7 @@ public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private long id;
+    private Long id;
     @Column(name = "name")
     @NotBlank(message = "Course name cannot be empty")
     private String name;
@@ -34,15 +34,15 @@ public class Course {
     private CourseDetails courseDetails;
     @Embedded
     private CourseFeatures courseFeatures;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false, columnDefinition = "bigint", referencedColumnName = "user_id")
     @NotNull(message = "Mentor cannot be null")
-    private Mentor user;
+    private Mentor mentor;
     @Enumerated
     @Column(name = "category_id", nullable = false, columnDefinition = "smallint")
     @NotNull(message = "Category cannot be null")
     private Category category;
-    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     private List<PriceDetails> priceDetails;
     @Column(name = "short_desc")
     @NotEmpty(message = "Short desc cannot be empty")
@@ -63,8 +63,8 @@ public class Course {
     @NotNull(message = "Language value cannot be null")
     private LanguageName language;
     @JsonBackReference
-    public Mentor getUser() {
-        return user;
+    public Mentor getMentor() {
+        return mentor;
     }
     @JsonManagedReference
     public List<PriceDetails> getPriceDetails() {

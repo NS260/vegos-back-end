@@ -5,7 +5,7 @@ import edu.com.vegosbackend.controller.settings.model.dto.course.details.CourseF
 import edu.com.vegosbackend.domain.constants.global.LanguageName;
 import edu.com.vegosbackend.domain.constants.course.Category;
 import edu.com.vegosbackend.domain.main.course.price.PriceDetails;
-import edu.com.vegosbackend.domain.main.user.User;
+import edu.com.vegosbackend.domain.main.user.roles.Mentor;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 
@@ -19,7 +19,7 @@ public class CourseDTO {
     private String name;
     private CourseDetailsDTO courseDetails;
     private CourseFeaturesDTO courseFeatures;
-    private User user;
+    private Mentor mentor;
     private Category category;
     private List<PriceDetails> priceDetails;
     private String shortDescription;

@@ -1,6 +1,7 @@
 package edu.com.vegosbackend.domain.main.course.review;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import edu.com.vegosbackend.domain.constants.course.RateType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;

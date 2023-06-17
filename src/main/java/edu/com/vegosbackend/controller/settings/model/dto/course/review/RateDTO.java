@@ -1,6 +1,6 @@
 package edu.com.vegosbackend.controller.settings.model.dto.course.review;
 
-import edu.com.vegosbackend.domain.main.course.review.RateType;
+import edu.com.vegosbackend.domain.constants.course.RateType;
 import jakarta.validation.constraints.Min;
 import lombok.Data;
 import org.springframework.stereotype.Component;

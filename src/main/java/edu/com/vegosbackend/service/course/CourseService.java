@@ -1,7 +1,9 @@
 package edu.com.vegosbackend.service.course;
 
 import edu.com.vegosbackend.domain.main.course.Course;
+import edu.com.vegosbackend.domain.main.user.User;
 import edu.com.vegosbackend.repository.course.CourseRepo;
+import edu.com.vegosbackend.repository.users.UserRepo;
 import edu.com.vegosbackend.service.settings.modifiers.GlobalClassGetter;
 import edu.com.vegosbackend.service.settings.exceptions.BasicException;
 import edu.com.vegosbackend.service.settings.exceptions.model.ExceptionModel;
@@ -22,11 +24,11 @@ public class CourseService {
     private final CourseRepo courseRepo;
     private final Setter<Course> courseSetter;
     private final GlobalClassGetter getter;
+    private final UserRepo userRepo;
 
     public Optional<Course> createCourse(Course course) {
-        course.setCreateDate(LocalDateTime.now());
         return Optional.ofNullable(Optional.of(courseRepo
-                        .save(course))
+                        .save(setBasicValuesForCourse(course)))
                 .orElseThrow(() -> new BasicException(
                         course.getClass(),
                         MessageType.NOT_CREATED)));
@@ -45,6 +47,7 @@ public class CourseService {
     }
 
     public Optional<Course> updateCourseById(Course course, Long id) {
+        setPriceValues(course);
         return Optional.ofNullable(Optional.of(courseRepo
                         .save(courseSetter.setValue(getter.getCourse(id), course)))
                 .orElseThrow(() -> new BasicException(
@@ -67,5 +70,21 @@ public class CourseService {
 
     public List<Course> searchBySpecification(Specification<Course> specification) {
         return courseRepo.findAll(specification);
+    }
+
+    private Course setBasicValuesForCourse(Course course) {
+        course.setCreateDate(LocalDateTime.now());
+        course.getMentor().setUser(userRepo
+                .findById(course.getMentor().getId())
+                .orElseThrow(() -> new BasicException(
+                        User.class,
+                        ValueType.ID,
+                        MessageType.NOT_FOUND,
+                        List.of(new ExceptionModel(User.class, String.valueOf(course.getMentor().getId()))))));
+        return course;
+    }
+
+    private void setPriceValues(Course course) {
+        course.getPriceDetails().forEach(val -> val.setCourse(course));
     }
 }

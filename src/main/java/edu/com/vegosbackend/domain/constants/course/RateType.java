@@ -1,4 +1,4 @@
-package edu.com.vegosbackend.domain.main.course.review;
+package edu.com.vegosbackend.domain.constants.course;
 
 public enum RateType {
     QUALITY,

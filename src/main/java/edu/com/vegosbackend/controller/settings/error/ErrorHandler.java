@@ -3,6 +3,7 @@ package edu.com.vegosbackend.controller.settings.error;
 import edu.com.vegosbackend.controller.settings.error.model.ExceptionBody;
 import edu.com.vegosbackend.service.settings.exceptions.BasicException;
 import edu.com.vegosbackend.service.settings.exceptions.model.constants.MessageType;
+import jdk.jshell.spi.ExecutionControl;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -54,5 +55,14 @@ public class ErrorHandler extends ResponseEntityExceptionHandler {
         }
         return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED)
                 .body(e.getMessage());
+    }
+
+    @ResponseBody
+    @ExceptionHandler({
+            ExecutionControl.InternalException.class
+    })
+    public ResponseEntity<?> handle(Exception exception){
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(ExceptionBody.fillBody(exception.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR));
     }
 }

@@ -15,7 +15,6 @@ public class Admin implements Role {
     private long id;
     @OneToOne
     @MapsId
-    @JoinColumn(name = "user_id", nullable = false, columnDefinition = "bigint",referencedColumnName = "id")
     private User user;
 
     public Admin(User user) {

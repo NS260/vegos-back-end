@@ -25,13 +25,11 @@ public class Answer {
     private String text;
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false, columnDefinition = "bigint")
-    @JsonIgnore
     @NotNull(message = "Mentor cannot be null")
     private Mentor mentor;
     @Column(columnDefinition = "timestamp", name = "answered_date")
     private LocalDateTime answeredDate;
     @OneToOne(mappedBy = "answer")
     @JsonIgnore
-    @NotNull(message = "Question value should be specified")
     private Question question;
 }

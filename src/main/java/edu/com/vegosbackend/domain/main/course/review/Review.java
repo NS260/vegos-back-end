@@ -1,8 +1,8 @@
 package edu.com.vegosbackend.domain.main.course.review;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import edu.com.vegosbackend.domain.main.course.Course;
 import edu.com.vegosbackend.domain.main.user.roles.Student;
+import edu.com.vegosbackend.domain.main.course.Course;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -19,7 +19,6 @@ public class Review {
     private long id;
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false, columnDefinition = "bigint")
-    @JsonIgnore
     @NotNull(message = "Student cannot be null")
     private Student student;
     @Column(name = "text")

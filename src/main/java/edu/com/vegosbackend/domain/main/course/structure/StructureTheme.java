@@ -2,6 +2,7 @@ package edu.com.vegosbackend.domain.main.course.structure;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import edu.com.vegosbackend.domain.main.course.Course;
+import edu.com.vegosbackend.domain.main.course.structure.StructureSubTheme;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

@@ -21,14 +21,13 @@ public class Mentor implements Role {
     private long id;
     @OneToOne
     @MapsId
-    @JoinColumn(name = "user_id", nullable = false, columnDefinition = "bigint", referencedColumnName = "id")
     private User user;
 
     @OneToMany(mappedBy = "mentor", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Answer> answer;
 
-    @OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "mentor",cascade = CascadeType.MERGE)
     private List<Course> course;
 
     @JsonManagedReference

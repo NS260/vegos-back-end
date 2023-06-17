@@ -155,9 +155,9 @@ public class QuestionService {
         }
     }
 
-    private void changeAnswerState(Object value, Long current, Long question) {
+    private void changeAnswerState(Answer value, Long current, Long question) {
         Question test = getQuestionByQuestionIdAndCourseId(current, question).get();
-        test.setAnswer((Answer) value);
+        test.setAnswer(value);
         questionRepo.save(test);
     }
 }

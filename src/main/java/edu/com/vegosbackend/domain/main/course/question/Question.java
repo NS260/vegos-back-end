@@ -1,8 +1,8 @@
 package edu.com.vegosbackend.domain.main.course.question;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import edu.com.vegosbackend.domain.main.course.Course;
 import edu.com.vegosbackend.domain.main.user.roles.Student;
+import edu.com.vegosbackend.domain.main.course.Course;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -26,12 +26,10 @@ public class Question {
     private String text;
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false, columnDefinition = "bigint")
-    @JsonIgnore
     @NotNull(message = "Student cannot be null")
     private Student student;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "answer_id",referencedColumnName = "id")
-    @JsonIgnore
     private Answer answer;
     @Column(columnDefinition = "timestamp", name = "asked_date")
     private LocalDateTime askedDate;
